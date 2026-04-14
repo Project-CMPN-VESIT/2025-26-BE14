@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Fake Review Detection System</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+  </head>
+
+  <body>
+    <div class="container">
+      <h1>🕵️‍♂️ Fake Review Detection System</h1>
+
+      <form action="/predict" method="post">
+        <label>Review Text:</label><br />
+        <textarea name="review_text" rows="5" required>
+{{ review_text or '' }}</textarea
+        ><br />
+
+        <label>Category:</label>
+        <input
+          type="text"
+          name="category"
+          value="{{ category or '' }}"
+          required
+        /><br />
+
+        <label>Rating (1-5):</label>
+        <input
+          type="number"
+          name="rating"
+          min="1"
+          max="5"
+          value="{{ rating or '' }}"
+          required
+        /><br />
+
+        <label>Username:</label>
+        <input
+          type="text"
+          name="username"
+          value="{{ username or '' }}"
+          required
+        /><br />
+
+        <label>Post Timestamp:</label>
+        <input
+          type="datetime-local"
+          name="post_timestamp"
+          value="{{ post_timestamp or '' }}"
+          required
+        /><br />
+
+        <label>Review Timestamp:</label>
+        <input
+          type="datetime-local"
+          name="review_timestamp"
+          value="{{ review_timestamp or '' }}"
+          required
+        /><br />
+
+        <input type="submit" value="Generate Analysis" />
+      </form>
+
+      {% if prediction %}
+      <div class="result">
+        <h3>Review Authenticity: {{ prediction }}</h3>
+
+        <h3>Sentiment: {{ sentiment }}</h3>
+
+        <p><strong>IP Address:</strong> {{ ip_address }}</p>
+      </div>
+      {% endif %}
+    </div>
+  </body>
+</html>
